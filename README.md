@@ -1,5 +1,5 @@
-# LMStoreLLVM
-LLVM LMStore Block Allocation Pass
+# LLVM MMLMstore
+LLVM-Based Memory-Mapped LMStore Method for Evaluating a Novel Scratchpad Memory
 
 # Build LLVMPass Project
     $ cd MMLMStore
