@@ -1,0 +1,1261 @@
+Module.cc:208:	frame->witness = witness;
+Module.cc:299:	return frame->getId();
+Module.cc:306:	frame->access_type = access_type;
+Module.cc:309:	frame->accesses_iterator = accesses.insert(accesses.end(),
+Module.cc:314:		frame->write_accesses_iterator = write_accesses.insert(
+Module.cc:320:		frame->alloc_accesses_iterator = alloc_accesses.insert(
+Module.cc:325:	unsigned block_address = frame->getAddress() >> log_block_size;
+Module.cc:329:	in_flight_access_ids.emplace(frame->getId());
+Module.cc:336:	accesses.erase(frame->accesses_iterator);
+Module.cc:337:	frame->accesses_iterator = accesses.end();
+Module.cc:340:	assert(frame->access_type);
+Module.cc:341:	if (frame->access_type == Module::AccessStore)
+Module.cc:343:		write_accesses.erase(frame->write_accesses_iterator);
+Module.cc:344:		frame->write_accesses_iterator = write_accesses.end();
+Module.cc:347:	if (frame->access_type == Module::AccessAlloc)
+Module.cc:349:		alloc_accesses.erase(frame->alloc_accesses_iterator);
+Module.cc:350:		frame->alloc_accesses_iterator = alloc_accesses.end();
+Module.cc:354:	unsigned block_address = frame->getAddress() >> log_block_size;
+Module.cc:373:	in_flight_access_ids.erase(frame->getId());
+Module.cc:376:	if (frame->coalesced)
+Module.cc:391:		if (list_frame->master_frame == frame)
+Module.cc:392:			list_frame->master_frame = nullptr;
+Module.cc:396:	frame->queue.WakeupAll();
+Module.cc:412:		if (older_than_frame && frame->getId() >=
+Module.cc:413:				older_than_frame->getId())
+Module.cc:417:		assert(frame->getAddress() >> log_block_size ==
+Module.cc:437:	auto it = older_than_frame->accesses_iterator;
+Module.cc:445:		if (frame->access_type == AccessStore)
+Module.cc:463:	auto it = older_than_frame->accesses_iterator;
+Module.cc:471:		if (frame->access_type == AccessAlloc)
+Module.cc:975:				frame->getId(),
+Module.cc:976:				frame->getAddress(),
+Module.cc:977:				frame->getAddress() >> log_block_size);
+Module.cc:978:		frame->CheckMagic();
+Module.cc:979:		if (block_address != frame->getAddress() >> log_block_size)
+Module.cc:1001:	if (older_than_frame->accesses_iterator == accesses.begin())
+Module.cc:1008:			older_than_frame->accesses_iterator :
+Module.cc:1024:			if (frame->access_type != AccessLoad)
+Module.cc:1028:			if (frame->getAddress() >> log_block_size ==
+Module.cc:1031:				assert(!frame->master_frame ||
+Module.cc:1032:						!frame->master_frame->master_frame);
+Module.cc:1033:				return frame->master_frame ?
+Module.cc:1034:						frame->master_frame :
+Module.cc:1052:		if (frame->access_type != AccessStore)
+Module.cc:1056:		if (frame->getAddress() >> log_block_size !=
+Module.cc:1061:		if (frame->port_locked)
+Module.cc:1065:		assert(!frame->master_frame ||
+Module.cc:1066:				!frame->master_frame->master_frame);
+Module.cc:1067:		return frame->master_frame ?
+Module.cc:1068:				frame->master_frame :
+Module.cc:1076:		if (frame->access_type != AccessNCStore)
+Module.cc:1080:		if (frame->getAddress() >> log_block_size !=
+Module.cc:1085:		if (frame->port_locked)
+Module.cc:1089:		assert(!frame->master_frame ||
+Module.cc:1090:				!frame->master_frame->master_frame);
+Module.cc:1091:		return frame->master_frame ?
+Module.cc:1092:				frame->master_frame :
+Module.cc:1112:			frame->getId(),
+Module.cc:1113:			master_frame->getId(),
+Module.cc:1115:			frame->getAddress());
+Module.cc:1119:	assert(!master_frame->master_frame);
+Module.cc:1123:	assert(frame->access_type);
+Module.cc:1126:	frame->coalesced = true;
+Module.cc:1127:	frame->master_frame = master_frame;
+Module.cc:1141:		assert(!frame->isInQueue());
+Module.cc:1146:		port_queue.Wait(event, frame->request_direction ==
+Module.cc:1164:	frame->port = port;
+Module.cc:1171:			frame->getId(),
+Module.cc:1184:	assert(frame->port && port->frame);
+Module.cc:1185:	assert(frame->port == port && port->frame == frame);
+Module.cc:1186:	assert(frame->getModule() == this);
+Module.cc:1189:	frame->port = nullptr;
+Module.cc:1196:			frame->getId(),
+Module.cc:1206:	frame->port = port;
+Module.cc:1215:			frame->getId(),
+Module.cc:1281:	new_frame->witness = witness;
+Module.cc:1324:			frame->pending++;
+Module.cc:1331:					frame->getId(),
+Module.cc:1333:					frame->tag);
+Module.cc:1334:			new_frame->set = set;
+Module.cc:1335:			new_frame->way = way;
+Module.cc:1336:			new_frame->witness = frame->witness;
+Module.cc:1352:	assert(this == frame->getModule());
+Module.cc:1357:	if (frame->request_direction == Frame::RequestDirectionUpDown)
+Module.cc:1359:		if (frame->read)
+Module.cc:1362:			if (frame->retry)
+Module.cc:1364:			if (frame->blocking)
+Module.cc:1368:			if (frame->hit)
+Module.cc:1371:				if (frame->retry)
+Module.cc:1377:				if (frame->retry)
+Module.cc:1382:		else if (frame->nc_write)  // Must go after read
+Module.cc:1385:			if (frame->retry)
+Module.cc:1387:			if (frame->blocking)
+Module.cc:1391:			if (frame->hit)
+Module.cc:1394:				if (frame->retry)
+Module.cc:1400:				if (frame->retry)
+Module.cc:1404:		else if (frame->write)
+Module.cc:1407:			if (frame->retry)
+Module.cc:1409:			if (frame->blocking)
+Module.cc:1413:			if (frame->hit)
+Module.cc:1416:				if (frame->retry)
+Module.cc:1422:				if (frame->retry)
+Module.cc:1431:	else if (frame->request_direction == Frame::RequestDirectionDownUp)
+Module.cc:1433:		assert(frame->hit);
+Module.cc:1434:		if (frame->write)
+Module.cc:1437:			if (frame->retry)
+Module.cc:1440:		else if (frame->read)
+Module.cc:1443:			if (frame->retry)
+Binary file libmemory.a matches
+Binary file SystemEvents.o matches
+Directory.cc:334:					frame->getId());
+Directory.cc:337:			if (!frame->getNext())
+Directory.cc:341:			frame = misc::cast<Frame *>(frame->getNext());
+Frame.cc:50:	id = frame->id;
+Frame.cc:51:	module = frame->module;
+Frame.cc:52:	address = frame->address;
+SystemEvents.cc:150:	Module *module = frame->getModule();
+SystemEvents.cc:177:				frame->getId(),
+SystemEvents.cc:178:				frame->getAddress(),
+SystemEvents.cc:185:				frame->getId(),
+SystemEvents.cc:187:				frame->getAddress());
+SystemEvents.cc:195:				frame->getAddress(),
+SystemEvents.cc:201:			master_frame->queue.Wait(event_load_finish);
+SystemEvents.cc:215:				frame->getId(),
+SystemEvents.cc:216:				frame->getAddress(),
+SystemEvents.cc:221:				frame->getId(),
+SystemEvents.cc:229:					frame->getId(),
+SystemEvents.cc:230:					older_frame->getId());
+SystemEvents.cc:231:			older_frame->queue.Wait(event_load_lock);
+SystemEvents.cc:238:				frame->getAddress(),
+SystemEvents.cc:243:					frame->getId(),
+SystemEvents.cc:244:					older_frame->getId());
+SystemEvents.cc:245:			older_frame->queue.Wait(event_load_lock);
+SystemEvents.cc:251:				frame->getId(),
+SystemEvents.cc:253:				frame->getAddress());
+SystemEvents.cc:254:		new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:255:		new_frame->blocking = true;
+SystemEvents.cc:256:		new_frame->read = true;
+SystemEvents.cc:257:		new_frame->retry = frame->retry;
+SystemEvents.cc:271:				frame->getId(),
+SystemEvents.cc:272:				frame->getAddress(),
+SystemEvents.cc:276:				frame->getId(),
+SystemEvents.cc:280:		if (frame->error)
+SystemEvents.cc:291:			frame->retry = true;
+SystemEvents.cc:297:		if (frame->state)
+SystemEvents.cc:306:				frame->getId(),
+SystemEvents.cc:308:				frame->tag);
+SystemEvents.cc:309:		new_frame->target_module = module->getLowModuleServingAddress(frame->tag);
+SystemEvents.cc:310:		new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:326:				frame->getId(),
+SystemEvents.cc:327:				frame->getAddress(),
+SystemEvents.cc:332:				frame->getId(),
+SystemEvents.cc:336:		if (frame->error)
+SystemEvents.cc:339:			directory->UnlockEntry(frame->set,
+SystemEvents.cc:340:					frame->way,
+SystemEvents.cc:341:					frame->getId());
+SystemEvents.cc:351:			frame->retry = true;
+SystemEvents.cc:358:		cache->setBlock(frame->set,
+SystemEvents.cc:359:				frame->way,
+SystemEvents.cc:360:				frame->tag,
+SystemEvents.cc:361:				frame->shared ? Cache::BlockShared : Cache::BlockExclusive);
+SystemEvents.cc:376:				frame->getId(),
+SystemEvents.cc:377:				frame->getAddress(),
+SystemEvents.cc:382:				frame->getId(),
+SystemEvents.cc:386:		directory->UnlockEntry(frame->set,
+SystemEvents.cc:387:				frame->way,
+SystemEvents.cc:388:				frame->getId());
+SystemEvents.cc:406:				frame->getId(),
+SystemEvents.cc:407:				frame->getAddress(),
+SystemEvents.cc:412:				frame->getId(),
+SystemEvents.cc:416:				frame->getId());
+SystemEvents.cc:419:		if (frame->witness)
+SystemEvents.cc:420:			(*frame->witness)++;
+SystemEvents.cc:439:	Module *module = frame->getModule();
+SystemEvents.cc:462:				frame->getId(),
+SystemEvents.cc:463:				frame->getAddress(),
+SystemEvents.cc:469:				frame->getId(),
+SystemEvents.cc:471:				frame->getAddress());
+SystemEvents.cc:479:				frame->getAddress(),
+SystemEvents.cc:486:			master_frame->queue.Wait(event_store_finish);
+SystemEvents.cc:489:			if (frame->witness)
+SystemEvents.cc:490:				(*frame->witness)++;
+SystemEvents.cc:507:				frame->getId(),
+SystemEvents.cc:508:				frame->getAddress(),
+SystemEvents.cc:513:				frame->getId(),
+SystemEvents.cc:517:		auto it = frame->accesses_iterator;
+SystemEvents.cc:527:					frame->getId(),
+SystemEvents.cc:528:					older_frame->getId());
+SystemEvents.cc:531:			older_frame->queue.Wait(event_store_lock);
+SystemEvents.cc:537:				frame->getId(),
+SystemEvents.cc:539:				frame->getAddress());
+SystemEvents.cc:540:		new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:541:		new_frame->blocking = true;
+SystemEvents.cc:542:		new_frame->write = true;
+SystemEvents.cc:543:		new_frame->retry = frame->retry;
+SystemEvents.cc:544:		new_frame->witness = frame->witness;
+SystemEvents.cc:557:				frame->getId(),
+SystemEvents.cc:558:				frame->getAddress(),
+SystemEvents.cc:563:				frame->getId(),
+SystemEvents.cc:567:		if (frame->error)
+SystemEvents.cc:578:			frame->retry = true;
+SystemEvents.cc:584:		if (frame->state == Cache::BlockModified ||
+SystemEvents.cc:585:			frame->state == Cache::BlockExclusive)
+SystemEvents.cc:595:				frame->getId(),
+SystemEvents.cc:597:				frame->getAddress());
+SystemEvents.cc:598:		new_frame->target_module = module->getLowModuleServingAddress(frame->tag);
+SystemEvents.cc:599:		new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:600:		new_frame->witness = frame->witness;
+SystemEvents.cc:604:		if (frame->state == Cache::BlockInvalid)
+SystemEvents.cc:606:			new_frame->reply_size = module->getBlockSize() + 8;
+SystemEvents.cc:607:			new_frame->setReplyIfHigher(Frame::ReplyAckData);
+SystemEvents.cc:611:			new_frame->reply_size = 8;
+SystemEvents.cc:612:			new_frame->setReplyIfHigher(Frame::ReplyAck);
+SystemEvents.cc:627:				frame->getId(),
+SystemEvents.cc:628:				frame->getAddress(),
+SystemEvents.cc:633:				frame->getId(),
+SystemEvents.cc:637:		if (frame->error)
+SystemEvents.cc:647:			directory->UnlockEntry(frame->set,
+SystemEvents.cc:648:					frame->way,
+SystemEvents.cc:649:					frame->getId());
+SystemEvents.cc:652:			frame->retry = true;
+SystemEvents.cc:658:		cache->setBlock(frame->set, frame->way, frame->tag,
+SystemEvents.cc:662:		directory->UnlockEntry(frame->set,
+SystemEvents.cc:663:				frame->way,
+SystemEvents.cc:664:				frame->getId());
+SystemEvents.cc:679:				frame->getId(),
+SystemEvents.cc:680:				frame->getAddress(),
+SystemEvents.cc:685:				frame->getId(),
+SystemEvents.cc:689:				frame->getId());
+SystemEvents.cc:710:	Module *module = frame->getModule();
+SystemEvents.cc:733:				frame->getId(),
+SystemEvents.cc:734:				frame->getAddress(),
+SystemEvents.cc:741:				frame->getId(),
+SystemEvents.cc:743:				frame->getAddress());
+SystemEvents.cc:751:				frame->getAddress(),
+SystemEvents.cc:757:			master_frame->queue.Wait(event_nc_store_finish);
+SystemEvents.cc:772:				frame->getId(),
+SystemEvents.cc:773:				frame->getAddress(),
+SystemEvents.cc:778:				frame->getId(),
+SystemEvents.cc:787:					frame->getId(),
+SystemEvents.cc:788:					older_frame->getId());
+SystemEvents.cc:791:			older_frame->queue.Wait(event_nc_store_lock);
+SystemEvents.cc:797:		older_frame = module->getInFlightAddress(frame->getAddress(),
+SystemEvents.cc:803:					frame->getId(),
+SystemEvents.cc:804:					older_frame->getId());
+SystemEvents.cc:807:			older_frame->queue.Wait(event_nc_store_lock);
+SystemEvents.cc:813:				frame->getId(),
+SystemEvents.cc:815:				frame->getAddress());
+SystemEvents.cc:816:		new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:817:		new_frame->blocking = true;
+SystemEvents.cc:818:		new_frame->nc_write = true;
+SystemEvents.cc:819:		new_frame->retry = frame->retry;
+SystemEvents.cc:832:				frame->getId(),
+SystemEvents.cc:833:				frame->getAddress(),
+SystemEvents.cc:838:				frame->getId(),
+SystemEvents.cc:842:		if (frame->error)
+SystemEvents.cc:852:			frame->retry = true;
+SystemEvents.cc:859:		if (frame->state == Cache::BlockModified ||
+SystemEvents.cc:860:				frame->state == Cache::BlockOwned)
+SystemEvents.cc:863:			frame->eviction = true;
+SystemEvents.cc:867:					frame->getId(),
+SystemEvents.cc:870:			new_frame->set = frame->set;
+SystemEvents.cc:871:			new_frame->way = frame->way;
+SystemEvents.cc:889:				frame->getId(),
+SystemEvents.cc:890:				frame->getAddress(),
+SystemEvents.cc:895:				frame->getId(),
+SystemEvents.cc:899:		if (frame->error)
+SystemEvents.cc:909:			frame->retry = true;
+SystemEvents.cc:927:		switch (frame->state)
+SystemEvents.cc:943:					frame->getId(),
+SystemEvents.cc:945:					frame->tag);
+SystemEvents.cc:946:			new_frame->message_type = Frame::MessageClearOwner;
+SystemEvents.cc:947:			new_frame->target_module = module->getLowModuleServingAddress(frame->tag);
+SystemEvents.cc:963:					frame->getId(),
+SystemEvents.cc:965:					frame->tag);
+SystemEvents.cc:966:			new_frame->nc_write = true;
+SystemEvents.cc:967:			new_frame->target_module = module->getLowModuleServingAddress(frame->tag);
+SystemEvents.cc:968:			new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:990:				frame->getId(),
+SystemEvents.cc:991:				frame->getAddress(),
+SystemEvents.cc:996:				frame->getId(),
+SystemEvents.cc:1000:		if (frame->error)
+SystemEvents.cc:1006:			directory->UnlockEntry(frame->set,
+SystemEvents.cc:1007:					frame->way,
+SystemEvents.cc:1008:					frame->getId());
+SystemEvents.cc:1016:			frame->retry = true;
+SystemEvents.cc:1032:				frame->getId(),
+SystemEvents.cc:1033:				frame->getAddress(),
+SystemEvents.cc:1038:				frame->getId(),
+SystemEvents.cc:1043:		cache->setBlock(frame->set, frame->way, frame->tag,
+SystemEvents.cc:1047:		directory->UnlockEntry(frame->set,
+SystemEvents.cc:1048:				frame->way,
+SystemEvents.cc:1049:				frame->getId());
+SystemEvents.cc:1066:				frame->getId(),
+SystemEvents.cc:1067:				frame->getAddress(),
+SystemEvents.cc:1072:				frame->getId(),
+SystemEvents.cc:1075:				frame->getId());
+SystemEvents.cc:1078:		if (frame->witness)
+SystemEvents.cc:1079:			(*frame->witness)++;
+SystemEvents.cc:1101:	Module *module = frame->getModule();
+SystemEvents.cc:1111:				frame->getId(),
+SystemEvents.cc:1112:				frame->getAddress(),
+SystemEvents.cc:1114:				frame->blocking);
+SystemEvents.cc:1118:				frame->getId(),
+SystemEvents.cc:1122:		parent_frame->error = false;
+SystemEvents.cc:1125:		frame->way = parent_frame->way;
+SystemEvents.cc:1136:		Module::Port *port = frame->port;
+SystemEvents.cc:1142:				frame->getId(),
+SystemEvents.cc:1143:				frame->getAddress(),
+SystemEvents.cc:1148:				frame->getId(),
+SystemEvents.cc:1153:		if (frame->retry)
+SystemEvents.cc:1159:		parent_frame->port_locked = true;
+SystemEvents.cc:1162:		frame->hit = module->FindBlock(frame->getAddress(),
+SystemEvents.cc:1163:				frame->set,
+SystemEvents.cc:1164:				frame->way,
+SystemEvents.cc:1165:				frame->tag,
+SystemEvents.cc:1166:				frame->state);
+SystemEvents.cc:1167:		if (frame->hit)
+SystemEvents.cc:1172:					frame->getId(),
+SystemEvents.cc:1173:					frame->tag,
+SystemEvents.cc:1175:					frame->set,
+SystemEvents.cc:1176:					frame->way,
+SystemEvents.cc:1177:					Cache::BlockStateMap[frame->state]);
+SystemEvents.cc:1185:		if (frame->write && frame->hit && frame->witness)
+SystemEvents.cc:1186:			(*frame->witness)++;
+SystemEvents.cc:1189:		if (!frame->hit)
+SystemEvents.cc:1196:			if (frame->request_direction == Frame::RequestDirectionDownUp)
+SystemEvents.cc:1200:						frame->getId());
+SystemEvents.cc:1201:				parent_frame->block_not_found = true;
+SystemEvents.cc:1203:				parent_frame->port_locked = false;
+SystemEvents.cc:1209:			assert(!frame->way);
+SystemEvents.cc:1210:			frame->way = cache->ReplaceBlock(frame->set);
+SystemEvents.cc:1212:		assert(frame->way >= 0);
+SystemEvents.cc:1216:		if (directory->isEntryLocked(frame->set, frame->way) &&
+SystemEvents.cc:1217:				!frame->blocking)
+SystemEvents.cc:1224:					frame->getId(),
+SystemEvents.cc:1225:					frame->tag,
+SystemEvents.cc:1227:					frame->set,
+SystemEvents.cc:1228:					frame->way,
+SystemEvents.cc:1229:					directory->getEntryAccessId(frame->set,
+SystemEvents.cc:1230:							frame->way));
+SystemEvents.cc:1233:			parent_frame->error = true;
+SystemEvents.cc:1235:			parent_frame->port_locked = false;
+SystemEvents.cc:1240:			if (frame->retry)
+SystemEvents.cc:1251:		if (!directory->LockEntry(frame->set,
+SystemEvents.cc:1252:				frame->way,
+SystemEvents.cc:1254:				frame->getId()))
+SystemEvents.cc:1261:					frame->getId(), 
+SystemEvents.cc:1262:					frame->tag,
+SystemEvents.cc:1264:					frame->set,
+SystemEvents.cc:1265:					frame->way,
+SystemEvents.cc:1266:					directory->getEntryAccessId(frame->set,
+SystemEvents.cc:1267:							frame->way));
+SystemEvents.cc:1271:			parent_frame->port_locked = false;
+SystemEvents.cc:1275:			if (frame->retry)
+SystemEvents.cc:1283:		if (!frame->hit)
+SystemEvents.cc:1287:			cache->getBlock(frame->set,
+SystemEvents.cc:1288:					frame->way,
+SystemEvents.cc:1290:					frame->state);
+SystemEvents.cc:1291:			assert(frame->state || !directory->isBlockSharedOrOwned(
+SystemEvents.cc:1292:					frame->set, frame->way));
+SystemEvents.cc:1299:					frame->getId(),
+SystemEvents.cc:1300:					frame->tag,
+SystemEvents.cc:1302:					frame->set,
+SystemEvents.cc:1303:					frame->way,
+SystemEvents.cc:1304:					Cache::BlockStateMap[frame->state]);
+SystemEvents.cc:1313:		cache->setTransientTag(frame->set, frame->way, frame->tag);
+SystemEvents.cc:1314:		cache->AccessBlock(frame->set, frame->way);
+SystemEvents.cc:1329:		Module::Port *port = frame->port;
+SystemEvents.cc:1335:				frame->getId(),
+SystemEvents.cc:1336:				frame->tag,
+SystemEvents.cc:1341:				frame->getId(),
+SystemEvents.cc:1346:		parent_frame->port_locked = false;
+SystemEvents.cc:1349:		if (!frame->hit && frame->state)
+SystemEvents.cc:1352:			frame->eviction = true;
+SystemEvents.cc:1357:					frame->getId(),
+SystemEvents.cc:1360:			new_frame->set = frame->set;
+SystemEvents.cc:1361:			new_frame->way = frame->way;
+SystemEvents.cc:1384:				frame->getId(),
+SystemEvents.cc:1385:				frame->tag,
+SystemEvents.cc:1387:				frame->error);
+SystemEvents.cc:1390:				frame->getId(),
+SystemEvents.cc:1394:		if (frame->error)
+SystemEvents.cc:1398:			cache->getBlock(frame->set, frame->way, tag,
+SystemEvents.cc:1399:					frame->state);
+SystemEvents.cc:1400:			assert(frame->state);
+SystemEvents.cc:1401:			assert(frame->eviction);
+SystemEvents.cc:1404:			directory->UnlockEntry(frame->set,
+SystemEvents.cc:1405:					frame->way,
+SystemEvents.cc:1406:					frame->getId());
+SystemEvents.cc:1409:			parent_frame->error = true;
+SystemEvents.cc:1415:		if (frame->eviction)
+SystemEvents.cc:1422:			cache->getBlock(frame->set, frame->way, tag,
+SystemEvents.cc:1423:					frame->state);
+SystemEvents.cc:1424:			assert(frame->state == Cache::BlockInvalid ||
+SystemEvents.cc:1425:					frame->state == Cache::BlockShared ||
+SystemEvents.cc:1426:					frame->state == Cache::BlockExclusive);
+SystemEvents.cc:1429:			cache->setBlock(frame->set, frame->way, 0,
+SystemEvents.cc:1436:				&& !frame->state)
+SystemEvents.cc:1438:			frame->state = Cache::BlockExclusive;
+SystemEvents.cc:1439:			cache->setBlock(frame->set, frame->way, frame->tag,
+SystemEvents.cc:1440:					frame->state);
+SystemEvents.cc:1444:		parent_frame->error = 0;
+SystemEvents.cc:1445:		parent_frame->set = frame->set;
+SystemEvents.cc:1446:		parent_frame->way = frame->way;
+SystemEvents.cc:1447:		parent_frame->state = frame->state;
+SystemEvents.cc:1448:		parent_frame->tag = frame->tag;
+SystemEvents.cc:1465:	Module *module = frame->getModule();
+SystemEvents.cc:1466:	Module *target_module = frame->target_module;
+SystemEvents.cc:1474:		parent_frame->error = false;
+SystemEvents.cc:1478:		cache->getBlock(frame->set, frame->way, tag, frame->state);
+SystemEvents.cc:1479:		frame->tag = tag;
+SystemEvents.cc:1480:		assert(frame->state || !directory->isBlockSharedOrOwned(
+SystemEvents.cc:1481:				frame->set, frame->way));
+SystemEvents.cc:1487:				frame->getId(),
+SystemEvents.cc:1488:				frame->tag,
+SystemEvents.cc:1490:				frame->set,
+SystemEvents.cc:1491:				frame->way,
+SystemEvents.cc:1492:				Cache::BlockStateMap[frame->state]);
+SystemEvents.cc:1495:				frame->getId(),
+SystemEvents.cc:1499:		frame->src_set = frame->set;
+SystemEvents.cc:1500:		frame->src_way = frame->way;
+SystemEvents.cc:1501:		frame->src_tag = frame->tag;
+SystemEvents.cc:1502:		frame->target_module = module->getLowModuleServingAddress(frame->tag);
+SystemEvents.cc:1506:				frame->getId(),
+SystemEvents.cc:1509:		new_frame->except_module = nullptr;
+SystemEvents.cc:1510:		new_frame->set = frame->set;
+SystemEvents.cc:1511:		new_frame->way = frame->way;
+SystemEvents.cc:1512:		new_frame->partial_invalidation = false;
+SystemEvents.cc:1525:				frame->getId(),
+SystemEvents.cc:1526:				frame->tag,
+SystemEvents.cc:1531:				frame->getId(),
+SystemEvents.cc:1537:		cache->getBlock(frame->set, frame->way, tag, frame->state);
+SystemEvents.cc:1543:			cache->setBlock(frame->src_set,
+SystemEvents.cc:1544:					frame->src_way,
+SystemEvents.cc:1564:				frame->getId(),
+SystemEvents.cc:1565:				frame->tag,
+SystemEvents.cc:1570:				frame->getId(),
+SystemEvents.cc:1574:		Module *low_module = frame->target_module;
+SystemEvents.cc:1577:		assert(low_module == module->getLowModuleServingAddress(frame->tag));
+SystemEvents.cc:1581:		if (frame->state == Cache::BlockInvalid)
+SystemEvents.cc:1589:		if (frame->state == Cache::BlockModified ||
+SystemEvents.cc:1590:			frame->state == Cache::BlockOwned ||
+SystemEvents.cc:1591:			frame->state == Cache::BlockNonCoherent)
+SystemEvents.cc:1594:			frame->reply = Frame::ReplyAckData;
+SystemEvents.cc:1602:			frame->reply = Frame::ReplyAck;
+SystemEvents.cc:1608:		frame->message = network->TrySend(source_node,
+SystemEvents.cc:1613:		if (frame->message)
+SystemEvents.cc:1619:					frame->message->getId(),
+SystemEvents.cc:1620:					frame->getId());
+SystemEvents.cc:1630:				frame->getId(),
+SystemEvents.cc:1631:				frame->tag,
+SystemEvents.cc:1636:				frame->getId(),
+SystemEvents.cc:1642:		network->Receive(node, frame->message);
+SystemEvents.cc:1646:				frame->getId(),
+SystemEvents.cc:1648:				frame->src_tag);
+SystemEvents.cc:1649:		new_frame->blocking = false;
+SystemEvents.cc:1650:		new_frame->request_direction = Frame::RequestDirectionDownUp;
+SystemEvents.cc:1651:		new_frame->write = true;
+SystemEvents.cc:1652:		new_frame->retry = false;
+SystemEvents.cc:1653:		if (frame->state == Cache::BlockNonCoherent)
+SystemEvents.cc:1670:				frame->getId(),
+SystemEvents.cc:1671:				frame->tag,
+SystemEvents.cc:1676:				frame->getId(),
+SystemEvents.cc:1680:		if (frame->error)
+SystemEvents.cc:1682:			parent_frame->error = true;
+SystemEvents.cc:1688:		if (frame->reply == Frame::ReplyAck)
+SystemEvents.cc:1692:		else if (frame->reply == Frame::ReplyAckData)
+SystemEvents.cc:1694:			if (frame->state == Cache::BlockExclusive)
+SystemEvents.cc:1697:				target_cache->setBlock(frame->set,
+SystemEvents.cc:1698:						frame->way,
+SystemEvents.cc:1699:						frame->tag,
+SystemEvents.cc:1702:			else if (frame->state == Cache::BlockModified)
+SystemEvents.cc:1721:			unsigned directory_entry_tag = frame->tag +
+SystemEvents.cc:1723:			assert(directory_entry_tag < frame->tag + (unsigned)
+SystemEvents.cc:1725:			if (directory_entry_tag < (unsigned) frame->src_tag ||
+SystemEvents.cc:1727:					frame->src_tag +
+SystemEvents.cc:1732:					frame->set, frame->way, z);
+SystemEvents.cc:1733:			directory->clearSharer(frame->set,
+SystemEvents.cc:1734:					frame->way,
+SystemEvents.cc:1739:				directory->setOwner(frame->set,
+SystemEvents.cc:1740:						frame->way,
+SystemEvents.cc:1746:		directory->UnlockEntry(frame->set,
+SystemEvents.cc:1747:				frame->way,
+SystemEvents.cc:1748:				frame->getId());
+SystemEvents.cc:1766:				frame->getId(),
+SystemEvents.cc:1767:				frame->tag,
+SystemEvents.cc:1772:				frame->getId(),
+SystemEvents.cc:1776:		if (frame->error)
+SystemEvents.cc:1778:			parent_frame->error = true;
+SystemEvents.cc:1785:		if (frame->reply == Frame::ReplyAckData)
+SystemEvents.cc:1787:			switch (frame->state)
+SystemEvents.cc:1791:				target_cache->setBlock(frame->set,
+SystemEvents.cc:1792:						frame->way,
+SystemEvents.cc:1793:						frame->tag,
+SystemEvents.cc:1806:				target_cache->setBlock(frame->set,
+SystemEvents.cc:1807:						frame->way,
+SystemEvents.cc:1808:						frame->tag,
+SystemEvents.cc:1827:			unsigned directory_entry_tag = frame->tag + z *
+SystemEvents.cc:1829:			assert(directory_entry_tag < frame->tag + (unsigned)
+SystemEvents.cc:1831:			if (directory_entry_tag < (unsigned) frame->src_tag || 
+SystemEvents.cc:1832:					directory_entry_tag >= frame->src_tag +
+SystemEvents.cc:1838:					frame->set,
+SystemEvents.cc:1839:					frame->way,
+SystemEvents.cc:1842:			directory->clearSharer(frame->set,
+SystemEvents.cc:1843:					frame->way,
+SystemEvents.cc:1847:				directory->setOwner(frame->set,
+SystemEvents.cc:1848:						frame->way,
+SystemEvents.cc:1854:		directory->UnlockEntry(frame->set,
+SystemEvents.cc:1855:				frame->way,
+SystemEvents.cc:1856:				frame->getId());
+SystemEvents.cc:1874:				frame->getId(),
+SystemEvents.cc:1875:				frame->tag,
+SystemEvents.cc:1880:				frame->getId(),
+SystemEvents.cc:1887:		frame->message = network->TrySend(source_node,
+SystemEvents.cc:1892:		if (frame->message)
+SystemEvents.cc:1898:					frame->message->getId(),
+SystemEvents.cc:1899:					frame->getId());
+SystemEvents.cc:1910:				frame->getId(),
+SystemEvents.cc:1911:				frame->tag,
+SystemEvents.cc:1916:				frame->getId(),
+SystemEvents.cc:1922:		network->Receive(node, frame->message);
+SystemEvents.cc:1925:		if (!frame->error)
+SystemEvents.cc:1926:			cache->setBlock(frame->src_set,
+SystemEvents.cc:1927:					frame->src_way,
+SystemEvents.cc:1932:		assert(!directory->isBlockSharedOrOwned(frame->src_set, frame->src_way));
+SystemEvents.cc:1945:				frame->getId(),
+SystemEvents.cc:1946:				frame->tag,
+SystemEvents.cc:1951:				frame->getId(),
+SystemEvents.cc:1971:	Module *module = frame->getModule();
+SystemEvents.cc:1972:	Module *target_module = frame->target_module;
+SystemEvents.cc:1982:				frame->getId(),
+SystemEvents.cc:1983:				frame->getAddress(),
+SystemEvents.cc:1988:				frame->getId(),
+SystemEvents.cc:1992:		parent_frame->error = false;
+SystemEvents.cc:1995:		assert(frame->request_direction);
+SystemEvents.cc:1996:		assert(module->getLowModuleServingAddress(frame->getAddress()) == target_module ||
+SystemEvents.cc:1997:				frame->request_direction == Frame::RequestDirectionDownUp);
+SystemEvents.cc:1998:		assert(target_module->getLowModuleServingAddress(frame->getAddress()) == module ||
+SystemEvents.cc:1999:				frame->request_direction == Frame::RequestDirectionUpDown);
+SystemEvents.cc:2005:		if (frame->request_direction == Frame::RequestDirectionUpDown)
+SystemEvents.cc:2019:		frame->message = network->TrySend(source_node,
+SystemEvents.cc:2024:		if (frame->message)
+SystemEvents.cc:2030:					frame->message->getId(),
+SystemEvents.cc:2031:					frame->getId());
+SystemEvents.cc:2042:				frame->getId(),
+SystemEvents.cc:2043:				frame->getAddress(),
+SystemEvents.cc:2048:				frame->getId(),
+SystemEvents.cc:2054:		if (frame->request_direction == Frame::RequestDirectionUpDown)
+SystemEvents.cc:2064:		network->Receive(node, frame->message);
+SystemEvents.cc:2068:				frame->getId(),
+SystemEvents.cc:2070:				frame->getAddress());
+SystemEvents.cc:2071:		new_frame->blocking = frame->request_direction ==
+SystemEvents.cc:2073:		new_frame->request_direction = frame->request_direction;
+SystemEvents.cc:2074:		new_frame->write = true;
+SystemEvents.cc:2075:		new_frame->retry = false;
+SystemEvents.cc:2088:				frame->getId(),
+SystemEvents.cc:2089:				frame->tag,
+SystemEvents.cc:2094:				frame->getId(),
+SystemEvents.cc:2099:		if (frame->error)
+SystemEvents.cc:2102:			assert(frame->request_direction == Frame::RequestDirectionUpDown);
+SystemEvents.cc:2103:			parent_frame->error = true;
+SystemEvents.cc:2106:			frame->reply_size = 8;
+SystemEvents.cc:2116:		if (frame->block_not_found)
+SystemEvents.cc:2120:			assert(frame->request_direction == Frame::RequestDirectionDownUp);
+SystemEvents.cc:2123:			parent_frame->setReplyIfHigher(Frame::ReplyAck);
+SystemEvents.cc:2126:			frame->reply_size = 8;
+SystemEvents.cc:2136:				frame->getId(),
+SystemEvents.cc:2138:				frame->getAddress());
+SystemEvents.cc:2139:		new_frame->except_module = module;
+SystemEvents.cc:2140:		new_frame->set = frame->set;
+SystemEvents.cc:2141:		new_frame->way = frame->way;
+SystemEvents.cc:2142:		assert(frame->request_direction);
+SystemEvents.cc:2143:		if (frame->request_direction == Frame::RequestDirectionDownUp)
+SystemEvents.cc:2144:			new_frame->partial_invalidation = false;
+SystemEvents.cc:2146:			new_frame->partial_invalidation = true;
+SystemEvents.cc:2160:				frame->getId(),
+SystemEvents.cc:2161:				frame->tag,
+SystemEvents.cc:2166:				frame->getId(),
+SystemEvents.cc:2171:		if (frame->request_direction == Frame::RequestDirectionUpDown)
+SystemEvents.cc:2184:				frame->getId(),
+SystemEvents.cc:2185:				frame->tag,
+SystemEvents.cc:2190:				frame->getId(),
+SystemEvents.cc:2194:		switch (frame->state)
+SystemEvents.cc:2212:					frame->getId(),
+SystemEvents.cc:2214:					frame->tag);
+SystemEvents.cc:2215:			new_frame->target_module = target_module->
+SystemEvents.cc:2216:					getLowModuleServingAddress(frame->tag);
+SystemEvents.cc:2217:			new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:2218:			if (frame->state == Cache::BlockInvalid)
+SystemEvents.cc:2220:				new_frame->reply_size = target_module->getBlockSize() 
+SystemEvents.cc:2222:				new_frame->setReplyIfHigher(Frame::ReplyAckData);
+SystemEvents.cc:2226:				new_frame->reply_size = 8;
+SystemEvents.cc:2227:				new_frame->setReplyIfHigher(Frame::ReplyAck);
+SystemEvents.cc:2250:				frame->getId(),
+SystemEvents.cc:2251:				frame->tag,
+SystemEvents.cc:2256:				frame->getId(),
+SystemEvents.cc:2260:		assert(frame->reply);
+SystemEvents.cc:2263:		if (frame->error)
+SystemEvents.cc:2266:			parent_frame->error = true;
+SystemEvents.cc:2267:			parent_frame->setReplyIfHigher(Frame::ReplyAckError);
+SystemEvents.cc:2270:			frame->reply_size = 8;
+SystemEvents.cc:2273:			target_directory->UnlockEntry(frame->set,
+SystemEvents.cc:2274:					frame->way,
+SystemEvents.cc:2275:					frame->getId());
+SystemEvents.cc:2285:			//assert(frame->getAddress() % module->getBlockSize() == 0);
+SystemEvents.cc:2286:			unsigned directory_entry_tag = frame->tag +
+SystemEvents.cc:2288:			assert(directory_entry_tag < frame->tag + 
+SystemEvents.cc:2290:			if (directory_entry_tag > frame->getAddress() || 
+SystemEvents.cc:2293:					frame->getAddress())
+SystemEvents.cc:2299:					frame->set,
+SystemEvents.cc:2300:					frame->way,
+SystemEvents.cc:2302:			target_directory->setSharer(frame->set,
+SystemEvents.cc:2303:					frame->way,
+SystemEvents.cc:2306:			target_directory->setOwner(frame->set,
+SystemEvents.cc:2307:					frame->way,
+SystemEvents.cc:2315:		target_cache->setBlock(frame->set,
+SystemEvents.cc:2316:				frame->way,
+SystemEvents.cc:2317:				frame->tag,
+SystemEvents.cc:2323:		if (frame->reply_size == 8) 
+SystemEvents.cc:2324:			parent_frame->setReplyIfHigher(Frame::ReplyAck);
+SystemEvents.cc:2325:		else if (frame->reply_size > 8)
+SystemEvents.cc:2326:			parent_frame->setReplyIfHigher(Frame::ReplyAckData);
+SystemEvents.cc:2331:		target_directory->UnlockEntry(frame->set,
+SystemEvents.cc:2332:				frame->way,
+SystemEvents.cc:2333:				frame->getId());
+SystemEvents.cc:2350:				frame->getId(),
+SystemEvents.cc:2351:				frame->tag,
+SystemEvents.cc:2356:				frame->getId(),
+SystemEvents.cc:2360:		assert(frame->state != Cache::BlockInvalid);
+SystemEvents.cc:2361:		assert(!target_directory->isBlockSharedOrOwned(frame->set, frame->way));
+SystemEvents.cc:2364:		switch (frame->state)
+SystemEvents.cc:2371:			frame->reply_size = 8;
+SystemEvents.cc:2372:			parent_frame->setReplyIfHigher(Frame::ReplyAck);
+SystemEvents.cc:2381:			frame->reply_size = target_module->getBlockSize() + 8;
+SystemEvents.cc:2382:			parent_frame->setReplyIfHigher(Frame::ReplyAckData);
+SystemEvents.cc:2403:				frame->getId(),
+SystemEvents.cc:2404:				frame->tag,
+SystemEvents.cc:2409:				frame->getId(),
+SystemEvents.cc:2413:		target_cache->setBlock(frame->set, frame->way, 0,
+SystemEvents.cc:2417:		target_directory->UnlockEntry(frame->set,
+SystemEvents.cc:2418:				frame->way,
+SystemEvents.cc:2419:				frame->getId());
+SystemEvents.cc:2422:		switch (parent_frame->reply)
+SystemEvents.cc:2458:				frame->getId(),
+SystemEvents.cc:2459:				frame->tag,
+SystemEvents.cc:2461:				frame->reply_size);
+SystemEvents.cc:2465:				frame->getId(),
+SystemEvents.cc:2469:		assert(frame->reply_size);
+SystemEvents.cc:2470:		assert(module->getLowModuleServingAddress(frame->getAddress()) == target_module ||
+SystemEvents.cc:2471:				target_module->getLowModuleServingAddress(frame->getAddress()) == module);
+SystemEvents.cc:2477:		if (frame->request_direction == Frame::RequestDirectionUpDown)
+SystemEvents.cc:2491:		frame->message = network->TrySend(source_node,
+SystemEvents.cc:2493:				frame->reply_size,
+SystemEvents.cc:2496:		if (frame->message)
+SystemEvents.cc:2502:					frame->message->getId(),
+SystemEvents.cc:2503:					frame->getId());
+SystemEvents.cc:2514:				frame->getId(),
+SystemEvents.cc:2515:				frame->tag,
+SystemEvents.cc:2520:				frame->getId(),
+SystemEvents.cc:2526:		if (frame->request_direction == Frame::RequestDirectionUpDown)
+SystemEvents.cc:2536:		network->Receive(node, frame->message);
+SystemEvents.cc:2542:		if (frame->request_direction == Frame::RequestDirectionUpDown
+SystemEvents.cc:2543:				&& frame->witness)
+SystemEvents.cc:2544:			(*frame->witness)++;
+SystemEvents.cc:2563:	Module *module = frame->getModule();
+SystemEvents.cc:2564:	Module *target_module = frame->target_module;
+SystemEvents.cc:2574:				frame->getId(),
+SystemEvents.cc:2575:				frame->getAddress(),
+SystemEvents.cc:2580:				frame->getId(),
+SystemEvents.cc:2584:		parent_frame->shared = false;
+SystemEvents.cc:2585:		parent_frame->error = false;
+SystemEvents.cc:2588:		assert(frame->request_direction);
+SystemEvents.cc:2589:		assert(module->getLowModuleServingAddress(frame->getAddress())
+SystemEvents.cc:2591:				frame->request_direction ==
+SystemEvents.cc:2594:				frame->getAddress()) == module ||
+SystemEvents.cc:2595:				frame->request_direction ==
+SystemEvents.cc:2602:		if (frame->request_direction == Frame::RequestDirectionUpDown)
+SystemEvents.cc:2622:		frame->message = network->TrySend(source_node,
+SystemEvents.cc:2627:		if (frame->message)
+SystemEvents.cc:2633:					frame->message->getId(),
+SystemEvents.cc:2634:					frame->getId());
+SystemEvents.cc:2644:				frame->getId(),
+SystemEvents.cc:2645:				frame->getAddress(),
+SystemEvents.cc:2650:				frame->getId(),
+SystemEvents.cc:2654:		if (frame->request_direction == Frame::RequestDirectionUpDown)
+SystemEvents.cc:2658:			network->Receive(node, frame->message);
+SystemEvents.cc:2664:			network->Receive(node, frame->message);
+SystemEvents.cc:2674:				frame->getId(),
+SystemEvents.cc:2676:				frame->getAddress());
+SystemEvents.cc:2677:		new_frame->request_direction = frame->request_direction;
+SystemEvents.cc:2678:		new_frame->blocking = frame->request_direction ==
+SystemEvents.cc:2680:		new_frame->read = true;
+SystemEvents.cc:2681:		new_frame->retry = false;
+SystemEvents.cc:2694:				frame->getId(),
+SystemEvents.cc:2695:				frame->tag,
+SystemEvents.cc:2700:				frame->getId(),
+SystemEvents.cc:2705:		if (frame->error)
+SystemEvents.cc:2707:			assert(frame->request_direction == Frame::RequestDirectionUpDown);
+SystemEvents.cc:2708:			parent_frame->error = true;
+SystemEvents.cc:2709:			parent_frame->setReplyIfHigher(Frame::ReplyAckError);
+SystemEvents.cc:2710:			frame->reply_size = 8;
+SystemEvents.cc:2720:		if (frame->block_not_found)
+SystemEvents.cc:2724:			assert(frame->request_direction == Frame::RequestDirectionDownUp);
+SystemEvents.cc:2727:			parent_frame->setReplyIfHigher(Frame::ReplyAck);
+SystemEvents.cc:2728:			frame->reply_size = 8;
+SystemEvents.cc:2736:		esim_engine->Next(frame->request_direction == Frame::RequestDirectionUpDown ?
+SystemEvents.cc:2748:				frame->getId(),
+SystemEvents.cc:2749:				frame->tag,
+SystemEvents.cc:2754:				frame->getId(),
+SystemEvents.cc:2758:		frame->pending = 1;
+SystemEvents.cc:2762:		frame->reply_size = module->getBlockSize() + 8;
+SystemEvents.cc:2763:		frame->setReplyIfHigher(Frame::ReplyAckData);
+SystemEvents.cc:2766:		if (frame->state)
+SystemEvents.cc:2774:			//assert(frame->getAddress() % module->getBlockSize() == 0);
+SystemEvents.cc:2780:				unsigned directory_entry_tag = frame->tag + z * target_module->getSubBlockSize();
+SystemEvents.cc:2781:				assert(directory_entry_tag < frame->tag + (unsigned) target_module->getBlockSize());
+SystemEvents.cc:2785:						frame->set,
+SystemEvents.cc:2786:						frame->way,
+SystemEvents.cc:2810:				frame->pending++;
+SystemEvents.cc:2814:						frame->getId(),
+SystemEvents.cc:2817:				new_frame->target_module = owner_module;
+SystemEvents.cc:2818:				new_frame->request_direction = Frame::RequestDirectionDownUp;
+SystemEvents.cc:2831:			assert(!directory->isBlockSharedOrOwned(frame->set, frame->way));
+SystemEvents.cc:2835:					frame->getId(),
+SystemEvents.cc:2837:					frame->tag);
+SystemEvents.cc:2838:			new_frame->target_module = target_module->getLowModuleServingAddress(frame->tag);
+SystemEvents.cc:2839:			new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:2854:				frame->getId(),
+SystemEvents.cc:2855:				frame->tag,
+SystemEvents.cc:2860:				frame->getId(),
+SystemEvents.cc:2864:		if (frame->error)
+SystemEvents.cc:2868:			directory->UnlockEntry(frame->set,
+SystemEvents.cc:2869:					frame->way,
+SystemEvents.cc:2870:					frame->getId());
+SystemEvents.cc:2873:			parent_frame->error = true;
+SystemEvents.cc:2874:			parent_frame->setReplyIfHigher(Frame::ReplyAckError);
+SystemEvents.cc:2877:			frame->reply_size = 8;
+SystemEvents.cc:2886:		target_cache->setBlock(frame->set,
+SystemEvents.cc:2887:				frame->way,
+SystemEvents.cc:2888:				frame->tag,
+SystemEvents.cc:2889:				frame->shared ? Cache::BlockShared : Cache::BlockExclusive);
+SystemEvents.cc:2900:		assert(frame->reply);
+SystemEvents.cc:2903:		assert(frame->pending > 0);
+SystemEvents.cc:2904:		frame->pending--;
+SystemEvents.cc:2905:		if (frame->pending)
+SystemEvents.cc:2912:				frame->getId(),
+SystemEvents.cc:2913:				frame->tag,
+SystemEvents.cc:2918:				frame->getId(),
+SystemEvents.cc:2924:		if (frame->reply_size == 8) 
+SystemEvents.cc:2926:			parent_frame->setReplyIfHigher(Frame::ReplyAck);
+SystemEvents.cc:2928:		else if (frame->reply_size > 8)
+SystemEvents.cc:2930:			parent_frame->setReplyIfHigher(Frame::ReplyAckData);
+SystemEvents.cc:2943:		if (!frame->retain_owner)
+SystemEvents.cc:2950:						frame->set,
+SystemEvents.cc:2951:						frame->way,
+SystemEvents.cc:2954:					directory->setOwner(frame->set,
+SystemEvents.cc:2955:							frame->way,
+SystemEvents.cc:2965:			unsigned directory_entry_tag = frame->tag + z * target_module->getSubBlockSize();
+SystemEvents.cc:2966:			if (directory_entry_tag < frame->getAddress() ||
+SystemEvents.cc:2967:					directory_entry_tag >= frame->getAddress()
+SystemEvents.cc:2971:			Directory::Entry *entry = directory->getEntry(frame->set,
+SystemEvents.cc:2972:					frame->way,
+SystemEvents.cc:2974:			directory->setSharer(frame->set,
+SystemEvents.cc:2975:					frame->way,
+SystemEvents.cc:2978:			if (entry->getNumSharers() > 1 || frame->nc_write || frame->shared)
+SystemEvents.cc:2983:			if (frame->state == Cache::BlockOwned ||
+SystemEvents.cc:2984:					frame->state == Cache::BlockNonCoherent ||
+SystemEvents.cc:2985:					frame->state == Cache::BlockShared)
+SystemEvents.cc:2993:		parent_frame->shared = shared;
+SystemEvents.cc:2998:				unsigned directory_entry_tag = frame->tag + z * target_module->getSubBlockSize();
+SystemEvents.cc:2999:				if (directory_entry_tag < frame->getAddress() ||
+SystemEvents.cc:3000:						directory_entry_tag >= frame->getAddress()
+SystemEvents.cc:3006:						frame->set,
+SystemEvents.cc:3007:						frame->way,
+SystemEvents.cc:3014:		directory->UnlockEntry(frame->set,
+SystemEvents.cc:3015:				frame->way,
+SystemEvents.cc:3016:				frame->getId());
+SystemEvents.cc:3033:				frame->getId(),
+SystemEvents.cc:3034:				frame->tag,
+SystemEvents.cc:3039:				frame->getId(),
+SystemEvents.cc:3044:		assert(frame->state != Cache::BlockInvalid);
+SystemEvents.cc:3045:		assert(frame->state != Cache::BlockShared);
+SystemEvents.cc:3046:		assert(frame->state != Cache::BlockNonCoherent);
+SystemEvents.cc:3047:		frame->pending = 1;
+SystemEvents.cc:3052:			unsigned directory_entry_tag = frame->tag + 
+SystemEvents.cc:3054:			assert(directory_entry_tag < frame->tag +
+SystemEvents.cc:3057:					frame->set,
+SystemEvents.cc:3058:					frame->way,
+SystemEvents.cc:3076:			frame->pending++;
+SystemEvents.cc:3080:					frame->getId(),
+SystemEvents.cc:3083:			new_frame->target_module = owner;
+SystemEvents.cc:3084:			new_frame->request_direction = Frame::RequestDirectionDownUp;
+SystemEvents.cc:3099:		assert(frame->pending > 0);
+SystemEvents.cc:3100:		frame->pending--;
+SystemEvents.cc:3101:		if (frame->pending)
+SystemEvents.cc:3108:				frame->getId(),
+SystemEvents.cc:3109:				frame->tag,
+SystemEvents.cc:3114:				frame->getId(),
+SystemEvents.cc:3118:		switch (frame->reply)
+SystemEvents.cc:3124:			target_cache->setBlock(frame->set, frame->way,
+SystemEvents.cc:3125:					frame->tag, Cache::BlockShared);
+SystemEvents.cc:3130:				target_directory->setOwner(frame->set,
+SystemEvents.cc:3131:						frame->way,
+SystemEvents.cc:3136:			frame->reply_size = target_module->getBlockSize() + 8;
+SystemEvents.cc:3137:			parent_frame->setReplyIfHigher(Frame::ReplyAckData);
+SystemEvents.cc:3147:			frame->reply_size = 8;
+SystemEvents.cc:3150:			target_cache->setBlock(frame->set, frame->way,
+SystemEvents.cc:3151:					frame->tag, Cache::BlockShared);
+SystemEvents.cc:3156:				target_directory->setOwner(frame->set,
+SystemEvents.cc:3157:						frame->way,
+SystemEvents.cc:3162:			frame->reply_size = 8;
+SystemEvents.cc:3163:			parent_frame->setReplyIfHigher(Frame::ReplyAck);
+SystemEvents.cc:3173:			switch (frame->state)
+SystemEvents.cc:3179:				frame->reply_size = 8;
+SystemEvents.cc:3180:				parent_frame->setReplyIfHigher(Frame::ReplyAck);
+SystemEvents.cc:3187:				frame->reply_size = target_module->getSubBlockSize() + 8;
+SystemEvents.cc:3188:				parent_frame->setReplyIfHigher(Frame::ReplyAckData);
+SystemEvents.cc:3197:			target_cache->setBlock(frame->set, frame->way,
+SystemEvents.cc:3198:					frame->tag, Cache::BlockShared);
+SystemEvents.cc:3210:		target_directory->UnlockEntry(frame->set,
+SystemEvents.cc:3211:				frame->way,
+SystemEvents.cc:3212:				frame->getId());
+SystemEvents.cc:3230:				frame->getId(),
+SystemEvents.cc:3231:				frame->tag,
+SystemEvents.cc:3233:				frame->reply_size);
+SystemEvents.cc:3237:				frame->getId(),
+SystemEvents.cc:3241:		assert(frame->reply_size);
+SystemEvents.cc:3242:		assert(frame->request_direction);
+SystemEvents.cc:3243:		assert(module->getLowModuleServingAddress(frame->getAddress())
+SystemEvents.cc:3245:				target_module->getLowModuleServingAddress(frame->getAddress())
+SystemEvents.cc:3252:		if (frame->request_direction == Frame::RequestDirectionUpDown)
+SystemEvents.cc:3271:		frame->message = network->TrySend(
+SystemEvents.cc:3274:				frame->reply_size,
+SystemEvents.cc:3277:		if (frame->message)
+SystemEvents.cc:3283:					frame->message->getId(),
+SystemEvents.cc:3284:					frame->getId());
+SystemEvents.cc:3295:				frame->getId(),
+SystemEvents.cc:3296:				frame->tag,
+SystemEvents.cc:3301:				frame->getId(),
+SystemEvents.cc:3307:		if (frame->request_direction == Frame::RequestDirectionUpDown)
+SystemEvents.cc:3317:		network->Receive(node, frame->message);
+SystemEvents.cc:3335:	Module *module = frame->getModule();
+SystemEvents.cc:3344:		cache->getBlock(frame->set, frame->way, tag, frame->state);
+SystemEvents.cc:3345:		frame->tag = tag;
+SystemEvents.cc:3351:				frame->getId(),
+SystemEvents.cc:3352:				frame->tag,
+SystemEvents.cc:3354:				frame->set,
+SystemEvents.cc:3355:				frame->way,
+SystemEvents.cc:3356:				Cache::BlockStateMap[frame->state]);
+SystemEvents.cc:3360:				frame->getId(),
+SystemEvents.cc:3361:				frame->tag,
+SystemEvents.cc:3367:				frame->getId(),
+SystemEvents.cc:3371:		frame->pending = 1;
+SystemEvents.cc:3377:			unsigned directory_entry_tag = frame->tag +
+SystemEvents.cc:3379:			assert(directory_entry_tag < frame->tag +
+SystemEvents.cc:3383:				frame->getId(),
+SystemEvents.cc:3384:				frame->tag,
+SystemEvents.cc:3388:			if (frame->partial_invalidation &&
+SystemEvents.cc:3389:					(frame->getAddress() < directory_entry_tag ||
+SystemEvents.cc:3390:					frame->getAddress() >= directory_entry_tag +
+SystemEvents.cc:3396:					frame->set, frame->way, z);
+SystemEvents.cc:3403:					frame->getId(),
+SystemEvents.cc:3404:					frame->tag,
+SystemEvents.cc:3407:				if (!directory->isSharer(frame->set,
+SystemEvents.cc:3408:						frame->way,
+SystemEvents.cc:3418:					frame->getId(),
+SystemEvents.cc:3419:					frame->tag,
+SystemEvents.cc:3421:				if (sharer == frame->except_module)
+SystemEvents.cc:3425:				directory->clearSharer(frame->set,
+SystemEvents.cc:3426:						frame->way,
+SystemEvents.cc:3433:					frame->getId(),
+SystemEvents.cc:3434:					frame->tag,
+SystemEvents.cc:3437:					directory->setOwner(frame->set,
+SystemEvents.cc:3438:							frame->way,
+SystemEvents.cc:3449:					frame->getId(),
+SystemEvents.cc:3450:					frame->tag,
+SystemEvents.cc:3457:				frame->pending++;
+SystemEvents.cc:3461:						frame->getId(),
+SystemEvents.cc:3464:				new_frame->target_module = sharer;
+SystemEvents.cc:3465:				new_frame->request_direction = Frame::RequestDirectionDownUp;
+SystemEvents.cc:3468:					frame->getId(),
+SystemEvents.cc:3469:					frame->tag,
+SystemEvents.cc:3490:				frame->getId(),
+SystemEvents.cc:3491:				frame->tag,
+SystemEvents.cc:3496:				frame->getId(),
+SystemEvents.cc:3502:		if (frame->reply == Frame::ReplyAckData)
+SystemEvents.cc:3504:			switch(frame->state)
+SystemEvents.cc:3507:				cache->setBlock(frame->set,
+SystemEvents.cc:3508:						frame->way,
+SystemEvents.cc:3509:						frame->tag,
+SystemEvents.cc:3514:				cache->setBlock(frame->set,
+SystemEvents.cc:3515:						frame->way,
+SystemEvents.cc:3516:						frame->tag,
+SystemEvents.cc:3533:		assert(frame->pending > 0);
+SystemEvents.cc:3534:		frame->pending--;
+SystemEvents.cc:3535:		if (frame->pending)
+SystemEvents.cc:3555:	Module *module = frame->getModule();
+SystemEvents.cc:3556:	Module *target_module = frame->target_module;
+SystemEvents.cc:3566:				frame->getId(),
+SystemEvents.cc:3567:				frame->tag,
+SystemEvents.cc:3571:		frame->reply_size = 8;
+SystemEvents.cc:3572:		frame->reply = Frame::ReplyAck;
+SystemEvents.cc:3575:		parent_frame->error = false;
+SystemEvents.cc:3578:		assert(frame->message_type != Frame::MessageNone);
+SystemEvents.cc:3587:		frame->message = network->TrySend(source_node,
+SystemEvents.cc:3594:		if (frame->message)
+SystemEvents.cc:3600:					frame->message->getId(),
+SystemEvents.cc:3601:					frame->getId());
+SystemEvents.cc:3613:				frame->getId(),
+SystemEvents.cc:3614:				frame->tag,
+SystemEvents.cc:3620:		network->Receive(node, frame->message);
+SystemEvents.cc:3624:					frame->getId(),
+SystemEvents.cc:3626:					frame->getAddress());
+SystemEvents.cc:3627:		new_frame->message_type = frame->message_type;
+SystemEvents.cc:3628:                new_frame->blocking = false;
+SystemEvents.cc:3629:		new_frame->retry = false;
+SystemEvents.cc:3646:				frame->getId(),
+SystemEvents.cc:3647:				frame->tag,
+SystemEvents.cc:3650:		assert(frame->message);
+SystemEvents.cc:3653:		debug << misc::fmt("frame error = %u\n", frame->error);
+SystemEvents.cc:3654:		if (frame->error)
+SystemEvents.cc:3656:			parent_frame->error = true;
+SystemEvents.cc:3657:			parent_frame->setReplyIfHigher(Frame::ReplyAckError);
+SystemEvents.cc:3658:			frame->reply_size = 8;
+SystemEvents.cc:3663:		if (frame->message_type == Frame::MessageClearOwner)
+SystemEvents.cc:3669:				if (int(frame->getAddress()) == frame->tag + z * 
+SystemEvents.cc:3675:							getEntry(frame->set, 
+SystemEvents.cc:3676:							frame->way, z);
+SystemEvents.cc:3690:		target_directory->UnlockEntry(frame->set,
+SystemEvents.cc:3691:				frame->way,
+SystemEvents.cc:3692:				frame->getId());
+SystemEvents.cc:3707:				frame->getId(),
+SystemEvents.cc:3708:				frame->tag,
+SystemEvents.cc:3710:				frame->reply_size);
+SystemEvents.cc:3719:		frame->message = network->TrySend(source_node,
+SystemEvents.cc:3721:				frame->reply_size,
+SystemEvents.cc:3726:		if (frame->message)
+SystemEvents.cc:3732:					frame->message->getId(),
+SystemEvents.cc:3733:					frame->getId());
+SystemEvents.cc:3744:				frame->getId(),
+SystemEvents.cc:3745:				frame->tag,
+SystemEvents.cc:3751:		network->Receive(node, frame->message);
+SystemEvents.cc:3769:	Module *module = frame->getModule();
+SystemEvents.cc:3778:				frame->getId(),
+SystemEvents.cc:3779:				frame->getAddress(),
+SystemEvents.cc:3788:				frame->getId(),
+SystemEvents.cc:3790:				frame->getAddress());
+SystemEvents.cc:3793:		frame->pending = 1;
+SystemEvents.cc:3809:		assert(frame->pending > 0);
+SystemEvents.cc:3810:		frame->pending--;
+SystemEvents.cc:3811:		if (frame->pending)
+SystemEvents.cc:3816:				frame->getId());
+SystemEvents.cc:3819:		if (frame->witness)
+SystemEvents.cc:3820:			(*frame->witness)++;
+SystemEvents.cc:3837:	Module *module = frame->getModule();
+SystemEvents.cc:3845:				frame->getId(),
+SystemEvents.cc:3846:				frame->getAddress(),
+SystemEvents.cc:3853:				frame->getId(),
+SystemEvents.cc:3855:				frame->getAddress());
+SystemEvents.cc:3863:				frame->getAddress(),
+SystemEvents.cc:3870:			master_frame->queue.Wait(event_local_load_finish);
+SystemEvents.cc:3886:				frame->getId(),
+SystemEvents.cc:3887:				frame->getAddress(),
+SystemEvents.cc:3892:				frame->getId(),
+SystemEvents.cc:3900:					frame->getId(),
+SystemEvents.cc:3901:					older_frame->getId());
+SystemEvents.cc:3902:			older_frame->queue.Wait(event_local_load_lock);
+SystemEvents.cc:3909:				frame->getAddress(),
+SystemEvents.cc:3914:					frame->getId(),
+SystemEvents.cc:3915:					older_frame->getId());
+SystemEvents.cc:3916:			older_frame->queue.Wait(event_local_load_lock);
+SystemEvents.cc:3922:				frame->getId(),
+SystemEvents.cc:3924:				frame->getAddress());
+SystemEvents.cc:3925:		new_frame->blocking = true;
+SystemEvents.cc:3926:		new_frame->read = true;
+SystemEvents.cc:3927:		new_frame->retry = frame->retry;
+SystemEvents.cc:3941:				frame->getId(),
+SystemEvents.cc:3942:				frame->getAddress(),
+SystemEvents.cc:3949:				frame->getId(),
+SystemEvents.cc:3955:				frame->getId());
+SystemEvents.cc:3958:		if (frame->witness)
+SystemEvents.cc:3959:			(*frame->witness)++;
+SystemEvents.cc:3980:	Module *module = frame->getModule();
+SystemEvents.cc:3988:				frame->getId(),
+SystemEvents.cc:3989:				frame->getAddress(),
+SystemEvents.cc:3997:				frame->getId(),
+SystemEvents.cc:3999:				frame->getAddress());
+SystemEvents.cc:4007:				frame->getAddress(),
+SystemEvents.cc:4014:			master_frame->queue.Wait(event_local_store_finish);
+SystemEvents.cc:4017:			if (frame->witness)
+SystemEvents.cc:4018:				(*frame->witness)++;
+SystemEvents.cc:4035:				frame->getId(),
+SystemEvents.cc:4036:				frame->getAddress(),
+SystemEvents.cc:4043:				frame->getId(),
+SystemEvents.cc:4047:		auto it = frame->accesses_iterator;
+SystemEvents.cc:4057:					frame->getId(),
+SystemEvents.cc:4058:					older_frame->getId());
+SystemEvents.cc:4061:			older_frame->queue.Wait(event_local_store_lock);
+SystemEvents.cc:4067:				frame->getId(),
+SystemEvents.cc:4069:				frame->getAddress());
+SystemEvents.cc:4070:		new_frame->blocking = true;
+SystemEvents.cc:4071:		new_frame->write = true;
+SystemEvents.cc:4072:		new_frame->retry = frame->retry;
+SystemEvents.cc:4073:		new_frame->witness = frame->witness;
+SystemEvents.cc:4080:		frame->witness = nullptr;
+SystemEvents.cc:4091:				frame->getId(),
+SystemEvents.cc:4092:				frame->getAddress(),
+SystemEvents.cc:4099:				frame->getId(),
+SystemEvents.cc:4105:				frame->getId());
+SystemEvents.cc:4127:	Module *module = frame->getModule();
+SystemEvents.cc:4135:				frame->getId(),
+SystemEvents.cc:4136:				frame->getAddress(),
+SystemEvents.cc:4138:				frame->blocking);
+SystemEvents.cc:4142:				frame->getId(),
+SystemEvents.cc:4146:		parent_frame->error = false;
+SystemEvents.cc:4149:		frame->way = parent_frame->way;
+SystemEvents.cc:4161:		Module::Port *port = frame->port;
+SystemEvents.cc:4167:				frame->getId(),
+SystemEvents.cc:4168:				frame->getAddress(),
+SystemEvents.cc:4175:				frame->getId(),
+SystemEvents.cc:4181:		parent_frame->port_locked = true;
+SystemEvents.cc:4185:		if (frame->retry)
+SystemEvents.cc:4190:		if (frame->read)
+SystemEvents.cc:4199:			if (frame->witness)
+SystemEvents.cc:4201:				(*frame->witness)++;
+SystemEvents.cc:4202:				frame->witness = nullptr;
+SystemEvents.cc:4217:		Module::Port *port = frame->port;
+SystemEvents.cc:4224:				frame->getId(),
+SystemEvents.cc:4225:				frame->getAddress(),
+SystemEvents.cc:4232:				frame->getId(),
+SystemEvents.cc:4237:		parent_frame->port_locked = false;
+SystemEvents.cc:4251:				frame->getId(),
+SystemEvents.cc:4252:				frame->getAddress(),
+SystemEvents.cc:4259:				frame->getId(),
+SystemEvents.cc:4277:	Module *module = frame->getModule();
+SystemEvents.cc:4280:	//assert(module->lmstore->ServesAddress(frame->getAddress()));
+SystemEvents.cc:4288:				frame->getId(),
+SystemEvents.cc:4289:				frame->getAddress(),
+SystemEvents.cc:4296:				frame->getId(),
+SystemEvents.cc:4298:				frame->getAddress());
+SystemEvents.cc:4305:				frame->getAddress(),
+SystemEvents.cc:4312:			master_frame->queue.Wait(event_lmstore_load_finish);
+SystemEvents.cc:4330:				frame->getId(),
+SystemEvents.cc:4331:				frame->getAddress(),
+SystemEvents.cc:4336:				frame->getId(),
+SystemEvents.cc:4344:					frame->getId(),
+SystemEvents.cc:4345:					older_frame->getId());
+SystemEvents.cc:4346:			older_frame->queue.Wait(event_lmstore_load_lock);
+SystemEvents.cc:4355:					frame->getId(),
+SystemEvents.cc:4356:					older_frame->getId());
+SystemEvents.cc:4357:			older_frame->queue.Wait(event_lmstore_load_lock);
+SystemEvents.cc:4364:				frame->getAddress(),
+SystemEvents.cc:4369:					frame->getId(),
+SystemEvents.cc:4370:					older_frame->getId());
+SystemEvents.cc:4371:			older_frame->queue.Wait(event_lmstore_load_lock);
+SystemEvents.cc:4377:				frame->getId(),
+SystemEvents.cc:4379:				frame->getAddress());
+SystemEvents.cc:4380:		new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:4381:		new_frame->blocking = true;
+SystemEvents.cc:4382:		new_frame->read = true;
+SystemEvents.cc:4383:		new_frame->retry = frame->retry;
+SystemEvents.cc:4395:		debug << misc::fmt("  %lld A-%lld 0x%x %s frame->state 0x%x lmstore_load_action\n",
+SystemEvents.cc:4397:				frame->getId(),
+SystemEvents.cc:4398:				frame->getAddress(),
+SystemEvents.cc:4400:				frame->state);
+SystemEvents.cc:4403:				frame->getId(),
+SystemEvents.cc:4407:		if (frame->error)
+SystemEvents.cc:4418:			frame->retry = true;
+SystemEvents.cc:4424:		assert(frame->state);
+SystemEvents.cc:4440:				frame->getId(),
+SystemEvents.cc:4441:				frame->getAddress(),
+SystemEvents.cc:4446:				frame->getId(),
+SystemEvents.cc:4464:				frame->getId(),
+SystemEvents.cc:4465:				frame->getAddress(),
+SystemEvents.cc:4472:				frame->getId(),
+SystemEvents.cc:4478:				frame->getId());
+SystemEvents.cc:4481:		if (frame->witness)
+SystemEvents.cc:4482:			(*frame->witness)++;
+SystemEvents.cc:4504:	Module *module = frame->getModule();
+SystemEvents.cc:4513:				frame->getId(),
+SystemEvents.cc:4514:				frame->getAddress(),
+SystemEvents.cc:4521:				frame->getId(),
+SystemEvents.cc:4523:				frame->getAddress());
+SystemEvents.cc:4532:				frame->getAddress(),
+SystemEvents.cc:4539:			master_frame->queue.Wait(event_lmstore_store_finish);
+SystemEvents.cc:4542:			if (frame->witness)
+SystemEvents.cc:4543:				(*frame->witness)++;
+SystemEvents.cc:4560:				frame->getId(),
+SystemEvents.cc:4561:				frame->getAddress(),
+SystemEvents.cc:4568:				frame->getId(),
+SystemEvents.cc:4572:		auto it = frame->accesses_iterator;
+SystemEvents.cc:4582:					frame->getId(),
+SystemEvents.cc:4583:					older_frame->getId());
+SystemEvents.cc:4586:			older_frame->queue.Wait(event_lmstore_store_lock);
+SystemEvents.cc:4592:				frame->getId(),
+SystemEvents.cc:4594:				frame->getAddress());
+SystemEvents.cc:4595:		new_frame->blocking = true;
+SystemEvents.cc:4596:		new_frame->write = true;
+SystemEvents.cc:4597:		new_frame->retry = frame->retry;
+SystemEvents.cc:4598:		new_frame->witness = frame->witness;
+SystemEvents.cc:4605:		frame->witness = nullptr;
+SystemEvents.cc:4616:				frame->getId(),
+SystemEvents.cc:4617:				frame->getAddress(),
+SystemEvents.cc:4622:				frame->getId(),
+SystemEvents.cc:4626:		if (frame->error)
+SystemEvents.cc:4637:			frame->retry = true;
+SystemEvents.cc:4643:		assert(frame->state);
+SystemEvents.cc:4657:				frame->getId(),
+SystemEvents.cc:4658:				frame->getAddress(),
+SystemEvents.cc:4663:				frame->getId(),
+SystemEvents.cc:4667:		lmstore->setBlockState(frame->getAddress(),
+SystemEvents.cc:4683:				frame->getId(),
+SystemEvents.cc:4684:				frame->getAddress(),
+SystemEvents.cc:4691:				frame->getId(),
+SystemEvents.cc:4697:				frame->getId());
+SystemEvents.cc:4718:	Module *module = frame->getModule();
+SystemEvents.cc:4727:				frame->getId(),
+SystemEvents.cc:4728:				frame->getAddress(),
+SystemEvents.cc:4730:				frame->blocking);
+SystemEvents.cc:4734:				frame->getId(),
+SystemEvents.cc:4738:		parent_frame->error = false;
+SystemEvents.cc:4750:		Module::Port *port = frame->port;
+SystemEvents.cc:4756:				frame->getId(),
+SystemEvents.cc:4757:				frame->getAddress(),
+SystemEvents.cc:4764:				frame->getId(),
+SystemEvents.cc:4770:		parent_frame->port_locked = true;
+SystemEvents.cc:4775:				frame->getId(),
+SystemEvents.cc:4776:				frame->getAddress(),
+SystemEvents.cc:4778:		unsigned blockstate = (unsigned) frame->state;
+SystemEvents.cc:4779:		frame->hit = lmstore->FindBlock(frame->getAddress(), blockstate);
+SystemEvents.cc:4781:			frame->state = Cache::BlockInvalid;
+SystemEvents.cc:4783:			frame->state = Cache::BlockExclusive;
+SystemEvents.cc:4784:		if (frame->hit)
+SystemEvents.cc:4789:					frame->getId(),
+SystemEvents.cc:4790:					frame->tag,
+SystemEvents.cc:4792:					frame->set,
+SystemEvents.cc:4793:					frame->way,
+SystemEvents.cc:4794:					LMStore::BlockStateMap[frame->state]);
+SystemEvents.cc:4801:        	        if (frame->write && frame->witness)
+SystemEvents.cc:4802:                	        (*frame->witness)++;
+SystemEvents.cc:4809:					frame->getId(),
+SystemEvents.cc:4810:					frame->tag,
+SystemEvents.cc:4812:					frame->set,
+SystemEvents.cc:4813:					frame->way,
+SystemEvents.cc:4814:					LMStore::BlockStateMap[frame->state]);
+SystemEvents.cc:4821:		parent_frame->port_locked = true;
+SystemEvents.cc:4825:		if (frame->retry)
+SystemEvents.cc:4830:		if (frame->read)
+SystemEvents.cc:4839:			if (frame->witness)
+SystemEvents.cc:4841:				(*frame->witness)++;
+SystemEvents.cc:4842:				frame->witness = nullptr;
+SystemEvents.cc:4856:		Module::Port *port = frame->port;
+SystemEvents.cc:4863:				frame->getId(),
+SystemEvents.cc:4864:				frame->getAddress(),
+SystemEvents.cc:4871:				frame->getId(),
+SystemEvents.cc:4876:		parent_frame->port_locked = false;
+SystemEvents.cc:4890:				frame->getId(),
+SystemEvents.cc:4891:				frame->getAddress(),
+SystemEvents.cc:4898:				frame->getId(),
+SystemEvents.cc:4902:		parent_frame->error = 0;
+SystemEvents.cc:4903:		parent_frame->state = frame->state;
+SystemEvents.cc:4918:	Module *module = frame->getModule();
+SystemEvents.cc:4927:				frame->getId(),
+SystemEvents.cc:4928:				frame->getAddress(),
+SystemEvents.cc:4935:				frame->getId(),
+SystemEvents.cc:4937:				frame->getAddress());
+SystemEvents.cc:4944:				frame->getAddress(),
+SystemEvents.cc:4951:			master_frame->queue.Wait(event_lmstore_alloc_finish);
+SystemEvents.cc:4969:				frame->getId(),
+SystemEvents.cc:4970:				frame->getAddress(),
+SystemEvents.cc:4975:				frame->getId(),
+SystemEvents.cc:4983:					frame->getId(),
+SystemEvents.cc:4984:					older_frame->getId());
+SystemEvents.cc:4985:			older_frame->queue.Wait(event_lmstore_alloc_lock);
+SystemEvents.cc:4992:				frame->getAddress(),
+SystemEvents.cc:4997:					frame->getId(),
+SystemEvents.cc:4998:					older_frame->getId());
+SystemEvents.cc:4999:			older_frame->queue.Wait(event_lmstore_alloc_lock);
+SystemEvents.cc:5005:				frame->getId(),
+SystemEvents.cc:5007:				frame->getAddress());
+SystemEvents.cc:5008:		new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:5009:		new_frame->blocking = true;
+SystemEvents.cc:5010:		new_frame->read = true;
+SystemEvents.cc:5011:		new_frame->retry = frame->retry;
+SystemEvents.cc:5025:				frame->getId(),
+SystemEvents.cc:5026:				frame->getAddress(),
+SystemEvents.cc:5030:				frame->getId(),
+SystemEvents.cc:5034:		if (frame->error)
+SystemEvents.cc:5045:			frame->retry = true;
+SystemEvents.cc:5051:		assert(!frame->state);
+SystemEvents.cc:5055:		unsigned tag = lmstore->getBlockID(frame->getAddress());
+SystemEvents.cc:5057:				frame->getId(),
+SystemEvents.cc:5060:		new_frame->target_module = mm;
+SystemEvents.cc:5061:		new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:5077:				frame->getId(),
+SystemEvents.cc:5078:				frame->getAddress(),
+SystemEvents.cc:5083:				frame->getId(),
+SystemEvents.cc:5087:		if (frame->error)
+SystemEvents.cc:5097:			frame->retry = true;
+SystemEvents.cc:5105:				frame->getId(),
+SystemEvents.cc:5106:				frame->getAddress(),
+SystemEvents.cc:5109:		lmstore->allocateBlock(frame->getAddress());
+SystemEvents.cc:5121:				frame->getId(),
+SystemEvents.cc:5122:				frame->getAddress(),
+SystemEvents.cc:5127:				frame->getId(),
+SystemEvents.cc:5145:				frame->getId(),
+SystemEvents.cc:5146:				frame->getAddress(),
+SystemEvents.cc:5153:				frame->getId(),
+SystemEvents.cc:5159:				frame->getId());
+SystemEvents.cc:5162:		if (frame->witness)
+SystemEvents.cc:5163:			(*frame->witness)++;
+SystemEvents.cc:5183:	Module *module = frame->getModule();
+SystemEvents.cc:5192:				frame->getId(),
+SystemEvents.cc:5193:				frame->getAddress(),
+SystemEvents.cc:5198:				frame->getId(),
+SystemEvents.cc:5199:				frame->getAddress(),
+SystemEvents.cc:5207:				frame->getAddress(),
+SystemEvents.cc:5214:			master_frame->queue.Wait(event_lmstore_dealloc_finish);
+SystemEvents.cc:5231:				frame->getId(),
+SystemEvents.cc:5232:				frame->getAddress(),
+SystemEvents.cc:5237:				frame->getId(),
+SystemEvents.cc:5245:					frame->getId(),
+SystemEvents.cc:5246:					older_frame->getId());
+SystemEvents.cc:5247:			older_frame->queue.Wait(event_lmstore_alloc_lock);
+SystemEvents.cc:5254:				frame->getAddress(),
+SystemEvents.cc:5259:					frame->getId(),
+SystemEvents.cc:5260:					older_frame->getId());
+SystemEvents.cc:5261:			older_frame->queue.Wait(event_lmstore_alloc_lock);
+SystemEvents.cc:5267:				frame->getId(),
+SystemEvents.cc:5269:				frame->getAddress());
+SystemEvents.cc:5270:		new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:5271:		new_frame->blocking = true;
+SystemEvents.cc:5272:		new_frame->read = true;
+SystemEvents.cc:5273:		new_frame->retry = frame->retry;
+SystemEvents.cc:5287:				frame->getId(),
+SystemEvents.cc:5288:				frame->getAddress(),
+SystemEvents.cc:5292:				frame->getId(),
+SystemEvents.cc:5296:		if (frame->error)
+SystemEvents.cc:5307:			frame->retry = true;
+SystemEvents.cc:5313:		assert(frame->state);
+SystemEvents.cc:5315:		if (frame->state != Cache::BlockModified)
+SystemEvents.cc:5324:		unsigned tag = lmstore->getBlockID(frame->getAddress());
+SystemEvents.cc:5326:				frame->getId(),
+SystemEvents.cc:5329:		new_frame->target_module = mm;
+SystemEvents.cc:5330:		new_frame->request_direction = Frame::RequestDirectionUpDown;
+SystemEvents.cc:5344:				frame->getId(),
+SystemEvents.cc:5345:				frame->tag,
+SystemEvents.cc:5350:				frame->getId(),
+SystemEvents.cc:5354:		if (frame->error)
+SystemEvents.cc:5364:			frame->retry = true;
+SystemEvents.cc:5369:		lmstore->deallocateBlock(frame->getAddress());
+SystemEvents.cc:5381:				frame->getId(),
+SystemEvents.cc:5382:				frame->getAddress(),
+SystemEvents.cc:5387:				frame->getId(),
+SystemEvents.cc:5405:				frame->getId(),
+SystemEvents.cc:5406:				frame->getAddress(),
+SystemEvents.cc:5413:				frame->getId(),
+SystemEvents.cc:5419:				frame->getId());
+SystemEvents.cc:5422:		if (frame->witness)
+SystemEvents.cc:5423:			(*frame->witness)++;
